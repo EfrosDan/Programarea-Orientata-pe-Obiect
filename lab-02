@@ -110,3 +110,50 @@ int main()
         cout << "The queue is not empty\n";
     }
 }
+
+- _Advanced Level_ (mark 9 || 10):
+#include <iostream>
+
+using namespace std;
+
+class box{
+    int height, width, length , area,volume;
+public:
+    void intput(){
+        cout << "Enter length of box: ";
+        cin >> length;
+        cout << "Enter width of box: ";
+        cin>>width;
+        cout << "Enter height of box: ";
+        cin >>height;
+    }
+    void display(){
+    cout << "height=" << height << " width=" << width << " lenght=" << length << endl;
+    }
+    int findArea(){
+       area=2*(length*width+length*height+width*height);
+    }
+    void displayArea(){
+        cout <<"Area of box is: "<<area<< "cm"<< endl;
+    }
+    int findVolume(){
+        volume=length*width*height;
+    }
+    void displayVolume(){
+        cout <<"Volume of box is: "<<volume<< "cm";
+    }
+};
+
+int main()
+{
+   box surface;
+
+   surface.intput();
+   surface.display();
+   surface.findArea();
+   surface.displayArea();
+   surface.findVolume();
+   surface.displayVolume();
+return 0;
+}
+
