@@ -41,7 +41,166 @@ return 0;
 }
 
  - _Medium Level_ (mark 7 || 8):
- 
+#include <iostream>
+#include <cstdlib>
+#define SIZE 10
+using namespace std;
+class Queue{
+    int *arr;
+    int capacity;
+    int front;
+    int rear;
+    int count;
+
+public:
+    Queue();
+    Queue(int size=SIZE);
+    ~Queue();
+    void push(int x);
+    void pop();
+    int peek();
+    int size();
+    bool isEmpty();
+    bool isFull();
+};
+
+Queue::Queue(){
+    arr = new int[3];
+    capacity=3;
+    front=0;
+    rear=-1;
+    count=0;
+}
+Queue::Queue(int size){
+    arr = new int[size];
+    capacity=size;
+    front=0;
+    rear=-1;
+    count=0;
+}
+Queue::~Queue(){
+delete[] arr;
+}
+void Queue::pop(){
+    if (isEmpty()){
+        cout << "Queue is empty!" << endl;
+        exit(EXIT_FAILURE);
+    }
+    cout << "Removing " << arr[front] << endl;
+    front= (front +1)%capacity;
+    count--;
+}
+void Queue::push(int item){
+    if(isFull()){
+        cout <<"Queue is full!" << endl;
+        exit(EXIT_FAILURE);
+    }
+    cout << "Inserting " << item << " " << endl;
+
+    rear = (rear + 1) % capacity;
+    arr[rear] = item;
+    count++;
+}
+
+int Queue::peek()
+{
+    if (isEmpty())
+    {
+        cout << "Queue is empty!" << endl;
+        exit(EXIT_FAILURE);
+    }
+    return arr[front];
+}
+
+int Queue::size() {
+    return count;
+}
+
+bool Queue::isEmpty() {
+    return (size() == 0);
+}
+
+bool Queue::isFull() {
+    return (size() == capacity);
+}
+
+int main()
+{
+    Queue q(5);
+
+    q.push(1);
+    q.push(2);
+    q.push(3);
+
+    cout << "The front element is " << q.peek() << endl;
+    q.pop();
+
+    q.push(4);
+
+    cout << "The queue size is " << q.size() << endl;
+
+    q.pop();
+    q.pop();
+    q.pop();
+
+    if (q.isEmpty()) {
+        cout << "The queue is empty\n";
+    }
+    else {
+        cout << "The queue is not empty\n";
+    }
+
+    return 0;
+}
+
+
+- _Advanced Level_ (mark 9 || 10):
+#include <iostream>
+
+using namespace std;
+
+class box{
+    int height, width, length , area,volume;
+public:
+    void intput(){
+        cout << "Enter length of box: ";
+        cin >> length;
+        cout << "Enter width of box: ";
+        cin>>width;
+        cout << "Enter height of box: ";
+        cin >>height;
+    }
+    void display(){
+    cout << "height=" << height << " width=" << width << " lenght=" << length << endl;
+    }
+    int findArea(){
+       area=2*(length*width+length*height+width*height);
+    }
+    void displayArea(){
+        cout <<"Area of box is: "<<area<< "cm"<< endl;
+    }
+    int findVolume(){
+        volume=length*width*height;
+    }
+    void displayVolume(){
+        cout <<"Volume of box is: "<<volume<< "cm";
+    }
+};
+
+int main()
+{
+   box surface;
+
+   surface.intput();
+   surface.display();
+   surface.findArea();
+   surface.displayArea();
+   surface.findVolume();
+   surface.displayVolume();
+return 0;
+}
+
+
 #include <iostream>
 #include <list>
 using namespace std;
@@ -89,7 +248,6 @@ public:
         this->marime--;
     }
 };
-
 int main()
 {
     Queue q (1);
@@ -109,51 +267,5 @@ int main()
     else {
         cout << "The queue is not empty\n";
     }
-}
-
-- _Advanced Level_ (mark 9 || 10):
-#include <iostream>
-
-using namespace std;
-
-class box{
-    int height, width, length , area,volume;
-public:
-    void intput(){
-        cout << "Enter length of box: ";
-        cin >> length;
-        cout << "Enter width of box: ";
-        cin>>width;
-        cout << "Enter height of box: ";
-        cin >>height;
-    }
-    void display(){
-    cout << "height=" << height << " width=" << width << " lenght=" << length << endl;
-    }
-    int findArea(){
-       area=2*(length*width+length*height+width*height);
-    }
-    void displayArea(){
-        cout <<"Area of box is: "<<area<< "cm"<< endl;
-    }
-    int findVolume(){
-        volume=length*width*height;
-    }
-    void displayVolume(){
-        cout <<"Volume of box is: "<<volume<< "cm";
-    }
-};
-
-int main()
-{
-   box surface;
-
-   surface.intput();
-   surface.display();
-   surface.findArea();
-   surface.displayArea();
-   surface.findVolume();
-   surface.displayVolume();
-return 0;
 }
 
