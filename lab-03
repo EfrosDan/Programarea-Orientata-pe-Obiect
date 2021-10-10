@@ -1,0 +1,75 @@
+package com.company;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+public class Main {
+
+    public static void main(String[] args) {
+        String Text="Pentru început, consider că sportul este o activitate de bază în viața unui om, astfel că practicarea sportului încă de la vârste fragede contribuie de dezvoltarea sănătoasă a organismului. Îmi amintesc că atunci când eram mic, chiar din clasele primare, profesorii de sport de la diverse discipline sportive veneau în școli pentru a îndruma și motiva copiii să se înscrie la o disciplină. Totodată, ora de sport în școli începe chiar de la clasa întâi, lucru care denotă importanța sa în viața omului.";
+        new Manipulation().NumberOf(Text);
+        new Manipulation().cuvinteIntalnite(Text);
+    }
+}
+
+
+package com.company;
+import java.util.*;
+
+public class Manipulation {
+    public void NumberOf(String text){
+        int nrProp = 0;
+        int nrCuvinte = 0;
+        int nrLitere = 0;
+        int nrVocale = 0;
+        int nrConsoane =0;
+        text.toLowerCase();
+        char[] chars = text.toCharArray();
+        for (char ch : chars){
+            if (ch == '.' || ch == '?' || ch == '!'){
+                nrProp++;
+            }
+            if (ch == ' '){
+                nrCuvinte++;
+            }
+            if ((ch > 64 && ch <91) || (ch > 96 && ch< 123)){
+                nrLitere++;
+            }
+            if (ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u' ){
+                nrVocale++;
+            } else {
+                nrConsoane++;
+            }
+        }
+        System.out.println("Numarul de propozitii =" + nrProp);
+        System.out.println("Numarul de cuvinte =" + nrCuvinte);
+        System.out.println("Numarul literelor  =" + nrLitere);
+        System.out.println("Numarul de vocalelor =" + nrVocale);
+        System.out.println("Numarul de consoanelor =" + nrConsoane);
+    }
+    public void cuvinteIntalnite(String text){
+        int max = 0;
+        String a = new String();
+        text.toLowerCase();
+        text.replaceAll("[.!,?]","");
+        String[] tokens = text.split(" ");
+        List<String> aux = new ArrayList<>(Arrays.asList(tokens));
+        System.out.println("\nCuvintele cele mai des intalnite sunt:");
+        for(int z=0;z<5;z++){
+            for(int k=0;k<aux.size(); k++){
+                int frq = Collections.frequency(aux,tokens[k]);
+                if (frq > max){
+                    max = frq;
+                    a=tokens[k];
+                }
+                if (k==aux.size()-1){
+                    System.out.print((z+1)+". "+ a + "=" +max + "\n");
+                    aux.removeAll(Collections.singleton(a));
+                    max=0;
+                }
+            }
+        }
+    }
+}
