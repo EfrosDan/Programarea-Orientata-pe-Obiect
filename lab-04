@@ -1,0 +1,141 @@
+// EvaluateString
+package com.company;
+
+import java.util.*;
+
+
+public class EvaluateString {
+    public static int evaluate(String expression) {
+        char[] tokens = expression.toCharArray();
+
+        Stack<Integer> values = new
+                Stack<Integer>();
+
+        Stack<Character> ops = new
+                Stack<Character>();
+
+        for (int i = 0; i < tokens.length; i++) {
+
+            if (tokens[i] == ' ')
+                continue;
+
+            if (tokens[i] >= '0' &&
+                    tokens[i] <= '9') {
+                StringBuffer sbuf = new
+                        StringBuffer();
+
+                while (i < tokens.length &&
+                        tokens[i] >= '0' &&
+                        tokens[i] <= '9')
+                    sbuf.append(tokens[i++]);
+                values.push(Integer.parseInt(sbuf.
+                        toString()));
+
+                i--;
+            } else if (tokens[i] == '(')
+                ops.push(tokens[i]);
+
+            else if (tokens[i] == ')') {
+                while (ops.peek() != '(')
+                    values.push(applyOp(ops.pop(),
+                            values.pop(),
+                            values.pop()));
+                ops.pop();
+            } else if (tokens[i] == '+' ||
+                    tokens[i] == '-' ||
+                    tokens[i] == '*' ||
+                    tokens[i] == '/') {
+                while (!ops.empty() &&
+                        hasPrecedence(tokens[i],
+                                ops.peek()))
+                    values.push(applyOp(ops.pop(),
+                            values.pop(),
+                            values.pop()));
+
+                ops.push(tokens[i]);
+            }
+        }
+
+        while (!ops.empty())
+            values.push(applyOp(ops.pop(),
+                    values.pop(),
+                    values.pop()));
+
+        return values.pop();
+    }
+
+    public static boolean hasPrecedence(
+            char op1, char op2) {
+        if (op2 == '(' || op2 == ')')
+            return false;
+        if ((op1 == '*' || op1 == '/') &&
+                (op2 == '+' || op2 == '-'))
+            return false;
+        else
+            return true;
+    }
+
+
+    public static int applyOp(char op,
+                              int b, int a) {
+        switch (op) {
+            case '+':
+                return a + b;
+            case '-':
+                return a - b;
+            case '*':
+                return a * b;
+            case '/':
+                if (b == 0)
+                    throw new
+                            UnsupportedOperationException(
+                            "Cannot divide by zero");
+                return a / b;
+        }
+        return 0;
+    }
+
+    static boolean areBracketsBalanced(String expression) {
+        Deque<Character> stack
+                = new ArrayDeque<Character>();
+
+        for (int i = 0; i < expression.length(); i++) {
+            char x = expression.charAt(i);
+
+            if (x == '(' || x == '[' || x == '{') {
+                // Push the element in the stack
+                stack.push(x);
+                continue;
+            }
+            if (stack.isEmpty())
+                return false;
+            char check;
+            switch (x) {
+                case ')':
+                    check = stack.pop();
+                    if (check == '{' || check == '[')
+                        return false;
+                    break;
+            }
+        }
+
+        // Check Empty Stack
+        return (stack.isEmpty());
+    }
+}
+
+// Main
+package com.company;
+import java.util.Stack;
+
+    public class Main{
+        public static void main(String[] args)
+    {
+        String expr = ("((2+3) + 4)");
+        if (EvaluateString.areBracketsBalanced(expr))
+            System.out.println("Parentheses are put correct. The result is " + EvaluateString.evaluate(expr) );
+        else
+            System.out.println("Parentheses are not put correct ");
+//        System.out.println(EvaluateString.evaluate(expr));
+    }
+}
