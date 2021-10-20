@@ -1,0 +1,78 @@
+- _Basic Level_ (mark 5 || 6):
+    1. Create 10 classes with their names as first 10 aphabetical letters (A, B, C, D, ... , J).
+	Each next class inherits from previous letter class (ex: `B inherits from A, C inherits from B ...`).
+
+	2. Each class should have their own String property with corresponding letter as their reference (ex: `class A -> public String a; class B -> String b; ...; class J - public String j;`).
+
+	3. Create by an object of each class type and print it in console in a clever way (so that all objects states are showed).
+  
+  #include <iostream>
+
+using namespace std;
+
+class A{
+    public:
+        A(){
+            cout <<"Litera A"<<endl;
+        }
+};
+class B : public A{
+public:
+    B(){
+        cout <<"Litera B"<<endl;
+    }
+};
+class C: public B{
+public:
+    C(){
+        cout <<"Litera C"<<endl;
+    }
+};
+class D: public C{
+public:
+    D(){
+        cout <<"Litera D"<<endl;
+    }
+};
+class E: public D{
+public:
+    E(){
+        cout <<"Litera E"<<endl;
+    }
+};
+class F : public E{
+public:
+    F(){
+        cout <<"Litera F"<<endl;
+    }
+};
+class G: public F{
+public:
+    G(){
+        cout <<"Litera G"<<endl;
+    }
+};
+class H: public G{
+public:
+    H(){
+        cout <<"Litera H"<<endl;
+    }
+};
+class I : public H{
+public:
+    I(){
+        cout <<"Litera I"<<endl;
+    }
+};
+class J: public I{
+public:
+    J(){
+        cout <<"Litera J"<<endl;
+    }
+};
+
+int main()
+{
+    J alpha;
+    return 0;
+}
