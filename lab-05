@@ -1,78 +1,124 @@
-- _Basic Level_ (mark 5 || 6):
-    1. Create 10 classes with their names as first 10 aphabetical letters (A, B, C, D, ... , J).
-	Each next class inherits from previous letter class (ex: `B inherits from A, C inherits from B ...`).
-
-	2. Each class should have their own String property with corresponding letter as their reference (ex: `class A -> public String a; class B -> String b; ...; class J - public String j;`).
-
-	3. Create by an object of each class type and print it in console in a clever way (so that all objects states are showed).
-  
-  #include <iostream>
-
+#include <iostream>
+#include <string>
 using namespace std;
 
+class X{
+string x;
+public:
+    X(string x){
+        this->x=x;
+    }
+    string getx(){
+        return this->x;
+    }
+};
 class A{
-    public:
-        A(){
-            cout <<"Litera A"<<endl;
-        }
-};
-class B : public A{
+protected:
+    string a;
+    X *x = new X("xxx");
 public:
-    B(){
-        cout <<"Litera B"<<endl;
+    A(string a, X *x){
+    this->a=a;
+    this->x=x;
+    }
+    ~A(){
+        delete this->x;
     }
 };
-class C: public B{
+class B : protected A{
+protected:
+    string b;
 public:
-    C(){
-        cout <<"Litera C"<<endl;
+    B(string a, string b, X *x)
+    :A(a,x){
+        this->b=b;
     }
 };
-class D: public C{
+class C : protected B{
+protected:
+    string c;
 public:
-    D(){
-        cout <<"Litera D"<<endl;
+    C(string a, string b,string c, X *x)
+    :B(a,b,x){
+        this->c=c;
     }
 };
-class E: public D{
+class D : protected C{
+protected:
+    string d;
+    X *x = new X("XxX");
 public:
-    E(){
-        cout <<"Litera E"<<endl;
+    D(string a, string b,string c, string d, X *x)
+    :C(a,b,c,x){
+        this->d=d;
     }
 };
-class F : public E{
+class E : protected D{
+protected:
+    string e;
 public:
-    F(){
-        cout <<"Litera F"<<endl;
+    E(string a, string b,string c, string d,string e, X *x)
+    :D(a,b,c,d,x){
+        this->e=e;
     }
 };
-class G: public F{
+class F : protected E{
+protected:
+    string f;
 public:
-    G(){
-        cout <<"Litera G"<<endl;
+    F(string a, string b,string c, string d,string e,string f, X *x)
+    :E(a,b,c,d,e,x){
+        this->f=f;
     }
 };
-class H: public G{
+class G : protected F{
+protected:
+    string g;
 public:
-    H(){
-        cout <<"Litera H"<<endl;
+    G(string a, string b,string c, string d,string e,string f,string g, X *x)
+    :F(a,b,c,d,e,f,x){
+        this->g=g;
     }
 };
-class I : public H{
+class H : protected G{
+X *x = new X("XxX");
+protected:
+    string h;
 public:
-    I(){
-        cout <<"Litera I"<<endl;
+    H(string a, string b,string c, string d,string e,string f,string g,string h, X *x)
+    :G(a,b,c,d,e,f,g,x){
+        this->h=h;
+        this->x=x;
+    }
+    X* getX(){
+    return x;
+    };
+};
+class I : protected H{
+protected:
+    string i;
+public:
+    I(string a, string b,string c, string d,string e,string f,string g,string h,string i, X *x)
+    :H(a,b,c,d,e,f,g,h,x){
+        this->i=i;
     }
 };
-class J: public I{
+class J : protected I{
+protected:
+    string j;
 public:
-    J(){
-        cout <<"Litera J"<<endl;
+    J(string a, string b,string c, string d,string e,string f,string g,string h,string i,string j, X *x)
+    :I(a,b,c,d,e,f,g,h,i,x){
+        this->j=j;
+    }
+    string printare(){
+        return a+b+c+d+e+f+g+h+i+j+getX()->getx();
     }
 };
 
-int main()
-{
-    J alpha;
+int main(){
+    X *x = new X("XxX");
+    J obj = J("a","b","c","d","e","f","g","h","i","j",x);
+    cout<<obj.printare()<<endl;
     return 0;
 }
