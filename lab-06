@@ -1,0 +1,322 @@
+#include <iostream>
+#include <list>
+using namespace std;
+
+class Person{
+private:
+    string title;
+    string givenName;
+    string middleName;
+    string familyName;
+    string name;
+    string birthDate;
+    char gender;
+    string homeAddress;
+    long phone;
+    list<Hospital*> hospitals;
+public:
+    Person();
+    Person(string title, string givenName, string middleName, string familyName,string name,string birthDate, char gender, string homeAddress,long phone);
+    ~Person();
+    void addHospital(Hospital* hospital);
+    void addHospitals(Hospital** hospital,int len);
+};
+Person::Person(string title, string givenName, string middleName, string familyName,string name,string birthDate, char gender, string homeAddress,long phone){
+    this->title=title;
+    this->givenName=givenName;
+    this->middleName=middleName;
+    this->familyName=familyName;
+    this->name=name;
+    this->birthDate=birthDate;
+    this->gender=gender;
+    this->homeAddress=homeAddress;
+    this->phone=phone;
+    }
+void Person::addHospital(Hospital* hospital){
+    this->hospitals.push_back(hospital)
+}
+void Person::addHospitals(Hospital** hospital,int len){
+    for(int i=0;i<len;i++)
+        this->addHospital(*(hospital+i));
+}
+class Patient: public Person{
+private:
+    string id;
+    string name;
+    char gender;
+    string birthDate;
+    int age;
+    string accepted;
+    list<string> sickness;
+    list<string> prescriptions;
+    list<string> allergies;
+    list<string> specialReqs;
+    list<OperationStaff*> operations;
+public:
+    Patient() : Person(){};
+    Patient(string title, string givenName, string middleName, string familyName,string name,string birthDate, char gender, string homeAddress,long phone);
+    Patient(string title, string givenName, string middleName, string familyName,string name,string birthDate, char gender, string homeAddress,long phone,string id,int age, string accepted, list<string> sickness, list<string> prescriptions,list<string> allergies,list<string> specialReqs);
+    ~Patient();
+    void addSickness(string sickness);
+    void addSickneses(string* sickness,int len);
+    void addPrescription(string prescription);
+    void addPrescriptions(string* prescription,int len);
+    void addAllergies(string allergies);
+    void addAllergies(string* allergies,int len);
+    void addReqs(string specialReqs);
+    void addReqs(string* specialReqs,int len);
+    void addOperationStaff(OperationsStaff* operation);
+    void addOperations(OperationsStaff** operations,int len);
+};
+Patient::Patient(string id, string name,char gender,string birthDate,int age,string accepted,string sickness,string prescriptions,string allergies,string specialReqs){
+    this->id=id;
+    this->name=name;
+    this->gender=gender;
+    this->birthDate=birthDate;
+    this->age=age;
+    this->accepted=accepted;
+    this->sickness=sickness;
+    this->prescriptions=prescriptions;
+    this->allergies=allergies;
+    this->specialReqs=specialReqs;
+    }
+
+class Hospital{
+private:
+    string name;
+    string address;
+    long phone;
+   list<Person*>persons;
+   list<Department*>departments;
+public:
+    Hospital();
+    Hospital(string name, string addres,long phone);
+    ~Hospital();
+    void addPerson(Person* person);
+    void addPersons(Person** person,int len);
+    void addDepartment(Department* departament);
+    void addDepartments(Department** department, int len);
+};
+Hospital::Hospital(string name, string addres,long phone){
+    this->name=name;
+    this->address=address;
+    this->phone=phone;
+    }
+    void Hospital::addPerson(Person* person){
+        this->person.push_back(person)
+    }
+    void Hospital::addPersons(Person** person,int len){
+        for(int i=0; i<len;i++)
+            this->addPerson(*(person+i));
+    }
+    void Hospital::addDepartment(Department* departament){
+    this->department.push_back(departament);
+    }
+    void Hospital::addDepartments(Department** department, int len){
+        for(int i=0; i<len;i++)
+            this->addDepartment(*(department+i));
+    }
+class Department {
+public:
+    Department();
+    Department(Hospital* hospital);
+    Department(Hospital hospital,list<Staff*>staff);
+    ~Department();
+    void addStaff(Staff* staff);
+    void addStaffs(Staff** staff, int len);
+private:
+    Hospital* hospital;
+    list<Staff*>staff;
+};
+Department::Department(Hospital* hospital){
+    this->hospitals.push_back(hospital)
+Department::Departemnt(Hospital* hospital, list<Staff*> staff){
+    this->hospital=staff;
+}
+void Department::addStaff(Staff* staff){
+    this->staff=staff;
+}
+void Departemnt::addStaffs(Staff** staff,int len){
+    for(int i=0, i<len, i++){
+        this->addStaff(*(staff+i));
+    }
+}
+
+class Staff : public Person {
+private:
+    string joined;
+    list<string> education;
+    list<string> certification;
+    list<string> languages;
+    Department* department;
+public:
+    Staff() : Person(){};
+    Staff(string title, string givenName, string middleName, string familyName,string name,string birthDate, char gender, string homeAddress,long phone,string joined, list<string> education,list<string> certification,list<string> languages,Department* department)
+    :Person(title,givenName,middleName,familyName,name,birthDate,gender,homeAdress,phone)
+    {
+
+        this->joined=joined;
+        this->department=department;
+    }
+    ~Staff();
+    void addEducation(string education);
+    void addEducations(string* education,int len);
+    void addCertification(string certification);
+    void addCertifications(string* certification,int len);
+    void addLanguage(string language);
+    void addLanguages(string* language,int len);
+};
+void Staff::addEducation(string education){
+    this->education=education;
+}
+void Staff::addEducations(string* education,int len){
+    for(int i=0, i<len, i++){
+        this->addEducations(*(education+i));
+}
+void Staff::addCertification(string certification){
+    this->certification=certifiaction;
+}
+void Staff::addCertifications(string* certification,int len){
+    for(int i=0, i<len, i++){
+        this->addCertification(*(education+i));
+}
+void Staff::addLanguage(string language){
+    this->language=language;
+}
+void Staff::addLanguages(string* language,int len){
+    for(int i=0, i<len, i++){
+        this->addLanguages(*(language+i));
+}
+
+class OperationsStaff : public Staff{
+    list<Patient> patients;
+public:
+    Operations():Staff(){}
+    OperationsStaff (string title, string givenName, string middleName, string familyName,string name,string birthDate, char gender, string homeAddress,long phone,string joined, list<string> education,list<string> certification,list<string> languages,Department* department){
+        :Patient(title,givenName,middleName,familyName,name,birthDate,gender,homeAdress,phone,joined,education,certification,languages,department){
+        }
+    }
+    Operations(string title, string givenName, string middleName, string familyName,string name,string birthDate, char gender, string homeAddress,long phone,string joined, list<string> education,list<string> certification,list<string> languages,Department* department){}
+    ~Operartions();
+
+    void addPatient(Patient* patient);
+    void addPatients(Patient** patient,int len);
+};
+void OperationsStaff::addPatient(Patient* patient){
+    this->patient=patient;
+}
+void OperationsStaff::addPatients(Patient** patient,int len){
+    for(int i=0, i<len, i++){
+        this->addPatient(*(patient+i));
+    }
+}
+class Doctor : public OperationsStaff{
+private:
+    list<string> specialty;
+    list<string> locations;
+public:
+    Doctor() : OperationsStaff(){}
+    Doctor(string title, string givenName, string middleName, string familyName,string name,string birthDate, char gender, string homeAddress,long phone,string joined, list<string> education,list<string> certification,list<string> languages,Department* department){
+        :Patient(title,givenName,middleName,familyName,name,birthDate,gender,homeAdress,phone,joined,education,certification,languages,department){
+        }
+    Doctor(string title, string givenName, string middleName, string familyName,string name,string birthDate, char gender, string homeAddress,long phone,string joined, list<string> education,list<string> certification,list<string> languages,Department* department){
+    ~Doctor();
+    void addSpecialty(string* speciality);
+    void addSpecialities(string* speciality, int len);
+    void addLocations(string* locations);
+    void addLocationss(string locations,int len);
+};
+void Doctor::addSpecialty(string* speciality){
+    this->specialty=specialty;
+
+}
+void Doctor::addSpecialities(string* speciality, int len){
+    for(int i=0, i<len, i++){
+        this->addSpecialty(*(speciality+i));
+    }
+}
+void Doctor::addLocations(string* locations){
+    this->locations=locations;
+
+}
+void Doctor::addLocationss(string* locations, int len){
+    for(int i=0, i<len, i++){
+        this->addLocations(*(location+i));
+    }
+}
+class Nurse : public OperationsStaff{
+public:
+    Nurse(string title, string givenName, string middleName, string familyName,string name,string birthDate, char gender, string homeAddress,long phone,string joined, list<string> education,list<string> certification,list<string> languages,Department* department){
+        :OperationsStaff(title,givenName,middleName,familyName,name,birthDate,gender,homeAdress,phone,joined,education,certification,languages,department){
+        }
+};
+class Surgeon : public Doctor{
+public:
+    Surgeon(): Doctor(){}
+    Surgeon(string title, string givenName, string middleName, string familyName,string name,string birthDate, char gender, string homeAddress,long phone,string joined, list<string> education,list<string> certification,list<string> languages,Department* department){
+        :Doctor(title,givenName,middleName,familyName,name,birthDate,gender,homeAdress,phone,joined,education,certification,languages,department)
+        }
+    ~Surgeon();
+};
+
+class AdministrativeStaff : public Staff{
+public:
+    AdministrativeStaff() : Staff(){}
+    AdministrativeStaff(string title, string givenName, string middleName, string familyName,string name,string birthDate, char gender, string homeAddress,long phone,string joined, list<string> education,list<string> certification,list<string> languages,Department* department){
+        :Staff(title,givenName,middleName,familyName,name,birthDate,gender,homeAddress,phone,joined,education,certification,languages,department)
+    }
+    ~AdministrativeStaff();
+};
+class FrontDeskStaff : public AdministrativeStaff{
+public:
+     FrontDeskStaff() : AdministrativeStaff(){}
+    FrontDeskStaff(string title, string givenName, string middleName, string familyName,string name,string birthDate, char gender, string homeAddress,long phone,string joined, list<string> education,list<string> certification,list<string> languages,Department* department){
+        :AdministrativeStaff(title,givenName,middleName,familyName,name,birthDate,gender,homeAddress,phone,joined,education,certification,languages,department)
+    }
+    ~FrontDeskStaff();
+};
+class Receptionist : public FrontDeskStaff{
+public:
+     Receptionist() : FrontDeskStaff(){}
+    Receptionist(string title, string givenName, string middleName, string familyName,string name,string birthDate, char gender, string homeAddress,long phone,string joined, list<string> education,list<string> certification,list<string> languages,Department* department){
+        :FrontDeskStaff(title,givenName,middleName,familyName,name,birthDate,gender,homeAddress,phone,joined,education,certification,languages,department)
+    }
+    ~Receptionist();
+};
+class TechnicalStaff : public Staff{
+public:
+     TechnicalStaff() : Staff(){}
+    TechnicalStaff(string title, string givenName, string middleName, string familyName,string name,string birthDate, char gender, string homeAddress,long phone,string joined, list<string> education,list<string> certification,list<string> languages,Department* department){
+        :Staff(title,givenName,middleName,familyName,name,birthDate,gender,homeAddress,phone,joined,education,certification,languages,department)
+    }
+    ~TechnicalStaff();
+};
+class Technician : public TechnicalStaff{
+public:
+     Technician() : TechnicalStaff(){}
+    Technician(string title, string givenName, string middleName, string familyName,string name,string birthDate, char gender, string homeAddress,long phone,string joined, list<string> education,list<string> certification,list<string> languages,Department* department){
+        :TechnicalStaff(title,givenName,middleName,familyName,name,birthDate,gender,homeAddress,phone,joined,education,certification,languages,department)
+    }
+    ~Technician();
+};
+class Technologist : public TechnicalStaff{
+public:
+     Technologist() : TechnicalStaff(){}
+    AdministrativeStaff(string title, string givenName, string middleName, string familyName,string name,string birthDate, char gender, string homeAddress,long phone,string joined, list<string> education,list<string> certification,list<string> languages,Department* department){
+        :Staff(title,givenName,middleName,familyName,name,birthDate,gender,homeAddress,phone,joined,education,certification,languages,department)
+    }
+    ~AdministrativeStaff();
+};
+class SurgicalTechnologist : public Technologist{
+public:
+     SurgicalTechnologist() : Technologist(){}
+    SurgicalTechnologist(string title, string givenName, string middleName, string familyName,string name,string birthDate, char gender, string homeAddress,long phone,string joined, list<string> education,list<string> certification,list<string> languages,Department* department){
+        :Technologist(title,givenName,middleName,familyName,name,birthDate,gender,homeAddress,phone,joined,education,certification,languages,department)
+    }
+    ~SurgicalTechnologist();
+};
+int main()
+{
+
+    return 0;
+}
