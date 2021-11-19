@@ -1,0 +1,84 @@
+#include <iostream>
+#include <cmath>
+#define figura 3
+using namespace std;
+
+class GeometricBody{
+protected:
+    double a,b,c;
+public:
+    virtual double getSurface()=0;
+    virtual double getVolume()=0;
+};
+class Cub : public GeometricBody{
+public:
+    void cub(double l){
+        a=l;
+    }
+    double getSurface(){
+        return 6*a*a;
+    }
+    double getVolume(){
+        return a*a*a;
+    }
+};
+class Sphere : public GeometricBody{
+public:
+    void sphere(double r){
+        a=r;
+    }
+    double getSurface(){
+        return 4*M_PI*a*a;
+    }
+    double getVolume(){
+        return 4*M_PI*a*a*a/3;
+    }
+};
+class Parallelepiped : public GeometricBody{
+public:
+    void parallelepiped(double L,double l,double h){
+        a=L;
+        b=l;
+        c=h;
+    }
+    double getSurface(){
+        return 2*(a*c+b*c+a*b);
+    }
+    double getVolume(){
+        return a*b*c;
+    }
+};
+class GeometricBodyController{
+public:
+    static double biggestVolume(GeometricBody **list){
+        double max = list[0]->getVolume();
+        for (unsigned i = 0; i<figura; i++)
+            if(max<list[i]->getVolume())
+            max = list[i]->getVolume();
+        return max;
+    }
+    static double  biggestSurface(GeometricBody **list){
+        double max = list[0]->getSurface();
+        for (unsigned i = 0; i<figura; i++)
+            if(max<list[i]->getSurface())
+            max = list[i]->getSurface();
+        return max;
+    }
+};
+int main()
+{
+    Cub c;
+    c.cub(4);
+    cout<<"Cub: Surface="<<c.getSurface()<<" and Volume="<<c.getVolume()<<endl;
+    Sphere s;
+    s.sphere(5);
+    cout<<"Sphere: Surface="<<s.getSurface()<<" and Volume="<<s.getVolume()<<endl;
+    Parallelepiped p;
+    p.parallelepiped(2,4,5);
+    cout<<"Parallelepiped: Surface="<<p.getSurface()<<" and Volume="<<p.getVolume()<<endl;
+
+    GeometricBody *Figura[figura]={&c,&s,&p};
+    cout <<"Cea mai mare suprafata: "<< GeometricBodyController::biggestSurface(Figura)<<endl;
+    cout <<"Cel mai mare volum: "<< GeometricBodyController::biggestVolume(Figura)<<endl;
+    return 0;
+}
